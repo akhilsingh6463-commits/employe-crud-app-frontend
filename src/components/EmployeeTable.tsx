@@ -31,7 +31,7 @@ function EmployeeTable({ employees, onEdit, onDelete }: Props) {
     return (
       <div className="empty-message">
         <p className="empty-title">No employees found</p>
-        <p className="empty-sub">Try searching with another name or add a new team member.</p>
+        <p className="empty-sub">Try searching with another keyword or add a new employee.</p>
       </div>
     );
   }
@@ -42,31 +42,36 @@ function EmployeeTable({ employees, onEdit, onDelete }: Props) {
         <thead>
           <tr>
             <th>Employee</th>
-            <th>Email</th>
+            <th className="desktop-only">Email</th>
             <th>Role</th>
             <th className="text-right">Actions</th>
           </tr>
         </thead>
         <tbody>
           {employees.map((emp) => (
-            <tr key={emp.id}>
-              <td>
+            <tr key={emp.id} className="employee-row">
+              <td className="cell-employee">
                 <div className="user-cell">
                   <span className="avatar">{getInitials(emp.name)}</span>
-                  <span className="user-name">{emp.name}</span>
+                  <div className="user-meta">
+                    <span className="user-name">{emp.name}</span>
+                    <a href={`mailto:${emp.email}`} className="email-link mobile-only">
+                      {emp.email}
+                    </a>
+                  </div>
                 </div>
               </td>
-              <td>
+              <td className="desktop-only">
                 <a href={`mailto:${emp.email}`} className="email-link">
                   {emp.email}
                 </a>
               </td>
-              <td>
+              <td className="cell-role">
                 <span className={`badge ${getRoleClass(emp.role)}`}>
                   {emp.role}
                 </span>
               </td>
-              <td className="text-right">
+              <td className="text-right cell-actions">
                 <div className="row-actions">
                   <button
                     className="btn-sm btn-edit"
