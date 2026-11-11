@@ -4,7 +4,11 @@ import { Employee } from './types';
 import EmployeeForm from './components/EmployeeForm';
 import EmployeeTable from './components/EmployeeTable';
 
-const API_URL = 'http://localhost:5000/employees';
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:5000/employees'
+    : '');
 const PAGE_SIZE = 5;
 
 // Initial 10 employees (matching MySQL schema.sql) used for GitHub Pages demo mode
@@ -44,9 +48,7 @@ function App() {
     setLoading(true);
     setError('');
 
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
-    if (isLocal) {
+    if (API_URL) {
       try {
         const res = await axios.get<Employee[]>(API_URL, {
           params: search.trim() ? { search: search.trim() } : {},
@@ -56,8 +58,7 @@ function App() {
         setLoading(false);
         return;
       } catch (err) {
-        // if local backend isn't responding, fall back to localStorage
-        console.warn('Backend server offline, falling back to local storage');
+        console.warn('API endpoint unreachable, falling back to local storage');
       }
     }
 
