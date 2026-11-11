@@ -23,3 +23,4 @@ Frontend for the Employee Directory CRUD Application built with React, TypeScrip
 
 3. Open [http://localhost:5173](http://localhost:5173) in your browser.
    Ensure the backend server is running on `http://localhost:5000`.
+
