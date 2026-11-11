@@ -8,7 +8,7 @@ const API_URL =
   import.meta.env.VITE_API_URL ||
   (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:5000/employees'
-    : '');
+    : 'https://employee-crud-app-server-production.up.railway.app/employees');
 const PAGE_SIZE = 5;
 
 // Initial 10 employees (matching MySQL schema.sql) used for GitHub Pages demo mode
