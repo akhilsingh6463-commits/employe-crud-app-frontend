@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Base & Reset
+   Base & Reset - Prevent any horizontal / landscape scroll
    ========================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -8,9 +8,11 @@
 }
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   max-width: 100vw;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -25,7 +27,8 @@ body {
   max-width: 1050px;
   width: 100%;
   margin: 0 auto;
-  padding: 24px 16px 40px;
+  padding: 20px 14px 40px;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================
@@ -35,27 +38,29 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   margin-bottom: 20px;
-  padding-bottom: 16px;
+  padding-bottom: 14px;
   border-bottom: 1px solid #e2e8f0;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .header-title-row {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .brand-badge {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   background: #2563eb;
   color: #ffffff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,9 +68,10 @@ body {
 }
 
 .header h1 {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
   color: #0f172a;
+  white-space: nowrap;
 }
 
 .subtitle {
@@ -90,7 +96,7 @@ body {
   gap: 6px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  padding: 5px 12px;
+  padding: 4px 12px;
   border-radius: 20px;
 }
 
@@ -106,18 +112,21 @@ body {
 }
 
 /* ==========================================================================
-   Layout (Responsive 2-column)
+   Layout (Strict No-Overflow Grid)
    ========================================================================== */
 .layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
   align-items: start;
+  width: 100%;
+  min-width: 0;
 }
 
-@media (min-width: 860px) {
+/* Only use side-by-side layout on large desktop screens */
+@media (min-width: 900px) {
   .layout {
-    grid-template-columns: 310px 1fr;
+    grid-template-columns: 310px minmax(0, 1fr);
     gap: 24px;
   }
 
@@ -125,6 +134,17 @@ body {
     position: sticky;
     top: 20px;
   }
+}
+
+.sidebar {
+  width: 100%;
+  min-width: 0;
+}
+
+.main-content {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* ==========================================================================
@@ -136,12 +156,15 @@ body {
   border-radius: 10px;
   padding: 18px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
 
 .form-header {
@@ -170,6 +193,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 100%;
 }
 
 .form-group label {
@@ -180,6 +204,7 @@ body {
 
 input {
   width: 100%;
+  box-sizing: border-box;
   padding: 8px 11px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
@@ -245,6 +270,7 @@ input:focus {
   display: flex;
   align-items: center;
   margin-bottom: 14px;
+  width: 100%;
 }
 
 .search-icon {
@@ -282,18 +308,22 @@ input:focus {
 }
 
 /* ==========================================================================
-   Table & Responsive Design
+   Table & Responsive Layout (Fixed Table - Zero Horizontal Scroll)
    ========================================================================== */
 .table-wrap {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   width: 100%;
+  max-width: 100%;
+  overflow: hidden; /* No horizontal scrollbar */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .table {
   width: 100%;
+  max-width: 100%;
+  table-layout: fixed; /* Strictly enforces container width */
   border-collapse: collapse;
   font-size: 13px;
   text-align: left;
@@ -306,14 +336,16 @@ input:focus {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 600;
-  padding: 10px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .table td {
-  padding: 11px 14px;
+  padding: 10px 12px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .table tbody tr:hover {
@@ -328,16 +360,35 @@ input:focus {
   text-align: right;
 }
 
+/* Column Widths on Desktop */
+.cell-employee {
+  width: 36%;
+}
+
+.desktop-only {
+  width: 30%;
+}
+
+.cell-role {
+  width: 18%;
+}
+
+.cell-actions {
+  width: 16%;
+}
+
 /* User cell */
 .user-cell {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #e0e7ff;
   color: #3730a3;
@@ -353,18 +404,26 @@ input:focus {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow: hidden;
 }
 
 .user-name {
   font-weight: 600;
   color: #0f172a;
   font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .email-link {
   color: #475569;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
 .email-link:hover {
@@ -379,10 +438,14 @@ input:focus {
 /* Badges */
 .badge {
   display: inline-block;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 12px;
   font-size: 11px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .badge-dev {
@@ -415,20 +478,22 @@ input:focus {
   border: 1px solid #cbd5e1;
 }
 
-/* Buttons */
+/* Row Action Buttons */
 .row-actions {
   display: inline-flex;
-  gap: 6px;
+  gap: 5px;
+  justify-content: flex-end;
 }
 
 .btn-sm {
-  padding: 4px 10px;
-  font-size: 12px;
+  padding: 4px 8px;
+  font-size: 11px;
   font-weight: 500;
-  border-radius: 5px;
+  border-radius: 4px;
   border: 1px solid #cbd5e1;
   background: #ffffff;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.15s;
 }
 
@@ -462,6 +527,7 @@ input:focus {
   gap: 10px;
   margin-top: 14px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .page-info {
@@ -503,20 +569,20 @@ input:focus {
   background: #ecfdf5;
   color: #065f46;
   border: 1px solid #a7f3d0;
-  padding: 9px 12px;
+  padding: 8px 12px;
   border-radius: 6px;
   font-size: 13px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .alert {
   background: #fef2f2;
   color: #991b1b;
   border: 1px solid #fecaca;
-  padding: 9px 12px;
+  padding: 8px 12px;
   border-radius: 6px;
   font-size: 13px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .error {
@@ -528,7 +594,7 @@ input:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 16px;
+  padding: 30px 16px;
   color: #64748b;
   gap: 8px;
 }
@@ -547,7 +613,7 @@ input:focus {
 }
 
 .empty-message {
-  padding: 30px 16px;
+  padding: 24px 16px;
   text-align: center;
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -567,9 +633,9 @@ input:focus {
 }
 
 /* ==========================================================================
-   Tablet Adaptations (< 720px)
+   Mobile Landscape & Tablet (< 860px) - Zero Horizontal Scroll
    ========================================================================== */
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .desktop-only {
     display: none !important;
   }
@@ -580,15 +646,27 @@ input:focus {
     color: #64748b;
   }
 
+  .cell-employee {
+    width: 48%;
+  }
+
+  .cell-role {
+    width: 26%;
+  }
+
+  .cell-actions {
+    width: 26%;
+  }
+
   .table th, .table td {
-    padding: 9px 10px;
+    padding: 8px 10px;
   }
 }
 
 /* ==========================================================================
-   Mobile View (< 520px): Shrinks perfectly with NO horizontal scroll
+   Small Mobile Devices (< 500px) - Stacked Cards View
    ========================================================================== */
-@media (max-width: 520px) {
+@media (max-width: 500px) {
   .container {
     padding: 12px 10px 30px;
   }
@@ -597,14 +675,13 @@ input:focus {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .header-stat {
     align-self: flex-start;
   }
 
-  /* Transform table rows into stacked cards on mobile phones */
   .table-wrap {
     background: transparent;
     border: none;
@@ -625,13 +702,14 @@ input:focus {
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     padding: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   }
 
   .table td {
     padding: 3px 0;
     border: none;
+    width: 100% !important;
   }
 
   .cell-employee {
@@ -647,7 +725,7 @@ input:focus {
     text-align: left;
     border-top: 1px solid #f1f5f9;
     padding-top: 8px;
-    margin-top: 6px;
+    margin-top: 4px;
   }
 
   .row-actions {
@@ -659,7 +737,7 @@ input:focus {
   .row-actions .btn-sm {
     flex: 1;
     text-align: center;
-    padding: 6px 12px;
+    padding: 6px 10px;
     font-size: 12px;
   }
 
