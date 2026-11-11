@@ -200,7 +200,7 @@ function App() {
             <h1>Employee Directory</h1>
             <p className="subtitle">
               Manage team members, roles, and contacts
-              {isDemoMode && <span className="demo-tag">Live Demo Mode (Saved locally)</span>}
+              
             </p>
           </div>
         </div>
