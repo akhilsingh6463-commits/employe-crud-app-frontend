@@ -2,6 +2,9 @@
 
 Frontend for the Employee Directory CRUD Application built with React, TypeScript, and Vite.
 
+## 🚀 Live Demo
+**[https://akhilsingh6463-commits.github.io/employe-crud-app-frontend/](https://akhilsingh6463-commits.github.io/employe-crud-app-frontend/)**
+
 ## Features
 - Add, View, Edit, and Delete employee records
 - Search filtering by name, email, or role
