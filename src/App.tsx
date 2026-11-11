@@ -198,10 +198,7 @@ function App() {
           <div className="brand-badge">ED</div>
           <div>
             <h1>Employee Directory</h1>
-            <p className="subtitle">
-              Manage team members, roles, and contacts
-              
-            </p>
+            <p className="subtitle">Manage team members, roles, and contacts</p>
           </div>
         </div>
         <div className="header-stat">
